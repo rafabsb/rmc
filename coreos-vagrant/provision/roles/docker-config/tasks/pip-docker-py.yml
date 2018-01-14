@@ -1,0 +1,8 @@
+---
+- name: Install Docker Python Api for Ansible
+  pip: name={{item}} state=present
+  with_items:
+    - docker-py
+  state: present
+  become: true
+  #environment: "{{proxy_env}}"

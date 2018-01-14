@@ -1,0 +1,14 @@
+{
+  "bip": "{{ dockerNetwork }}",
+  "insecure-registries": [
+    "http://{{registryUrl}}:{{registryPort}}",
+    "http://{{registryUrl}}:{{registryProxyPort}}",
+    "http://{{registryUrl}}"
+  ],
+  "graph": "{{ dockerDaemonDataDir }}",
+  "registry-mirrors": [
+    "http://{{mirrorUrl}}:{{mirrorPort}}",
+    "http://{{mirrorUrl}}:{{mirrorProxyPort}}",
+    "http://{{mirrorUrl}}"
+  ]
+}

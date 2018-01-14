@@ -1,0 +1,48 @@
+core-02 ansible_host=127.0.0.1 ansible_port=2200 ansible_user='core' ansible_ssh_private_key_file='/home/rafael/.vagrant.d/insecure_private_key' bootstrap_os=coreos ansible_python_interpreter=/home/core/bin/python ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+core-01 ansible_host=127.0.0.1 ansible_port=2222 ansible_user='core' ansible_ssh_private_key_file='/home/rafael/.vagrant.d/insecure_private_key' bootstrap_os=coreos ansible_python_interpreter=/home/core/bin/python ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+core-03 ansible_host=127.0.0.1 ansible_port=2201 ansible_user='core' ansible_ssh_private_key_file='/home/rafael/.vagrant.d/insecure_private_key' bootstrap_os=coreos ansible_python_interpreter=/home/core/bin/python ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+
+
+# static groups
+[static_server]
+core-01
+
+[static_node]
+core-01
+core-02
+core-03
+
+[static_loadbalancer]
+
+# EC2 dynamic groups
+[tag_rancher_role_server]
+[tag_rancher_role_node]
+[tag_rancher_role_loadbalancer]
+
+
+###################################
+### DO NOT EDIT BELOW THIS LINE ###
+###################################
+
+# this group is used for variable assignment of static hosts
+[static:children]
+static_server
+static_node
+static_loadbalancer
+
+# collected groups - these are what Ansible actually uses in its
+# playbooks
+
+[server:children]
+static_server
+tag_rancher_role_server
+
+[node:children]
+static_node
+tag_rancher_role_node
+
+[loadbalancer:children]
+static_loadbalancer
+tag_rancher_role_loadbalancer
+
+

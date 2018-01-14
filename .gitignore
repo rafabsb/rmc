@@ -1,0 +1,4 @@
+*.vmdk
+*.retry
+*.jar
+*.img
