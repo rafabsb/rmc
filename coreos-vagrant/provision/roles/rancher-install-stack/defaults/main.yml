@@ -1,0 +1,4 @@
+---
+rancher_cli_stack_opts: "--pull --upgrade"
+# rancher_master_url: "http://localhost:8080"
+rancher_master_url: "http://{{ hostvars['core-01']['ansible_env']['COREOS_PUBLIC_IPV4'] }}:8080"

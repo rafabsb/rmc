@@ -1,6 +1,6 @@
 ---
 #./ansible-playbook_wrapper create_master.yml -K
-- hosts: rancher-master
+- hosts: rancher-masters
   roles:
   - {role: rancher-install-master, tags: rancher-master}
 

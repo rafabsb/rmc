@@ -17,6 +17,9 @@
     return_content: yes
   register: rancher_token
 
+- name: asd
+  shell: echo "{{ lookup('env','COREOS_PUBLIC_IPV4') }}" > /home/core/qwe.txt
+
 - name: Register regular host into the master
   docker_container:
       name: rancherAgent

@@ -1,0 +1,8 @@
+# rancher_master_url: "http://localhost:8080"
+# rancher_master_url: "{{ hostvars['core-01']['ansible_eth0']['ipv4']['address'] }}"
+
+rancher_master_url: "http://{{ hostvars['core-01']['ansible_env']['COREOS_PUBLIC_IPV4'] }}:8080"
+
+rancher_project_template_name: "Cattle"
+
+docker_registries: []

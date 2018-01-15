@@ -1,0 +1,58 @@
+---
+- name: Verify if project exists
+  stat: path="{{ inventory_dir }}/group_vars/{{ rancher_project_name }}/apikey.yml"
+  delegate_to: localhost
+  register: project_file
+
+- name: Create Project
+  environment:
+    RANCHER_URL: "{{rancher_master_url}}"
+    RANCHER_ACCESS_KEY: "{{ rancher_api_key }}"
+    RANCHER_SECRET_KEY: "{{ rancher_api_secret }}"
+  shell: |
+    PATH="/home/core/bin:$PATH"
+    rancher env create -t {{rancher_project_template_name}} {{ rancher_project_name }}
+  
+  register: create_project
+  when: project_file.stat.exists == False
+
+- name: Register project id
+  set_fact:
+    rancher_project_id: "{{ create_project.stdout }}"
+  when: project_file.stat.exists == False
+
+- name: Create API KEY
+  uri:
+    method: POST
+    status_code: 201
+    user: "{{ rancher_api_key }}"
+    password: "{{ rancher_api_secret }}"
+    body: ' {"accountId":"{{ rancher_project_id }}", "name":"{{ rancher_project_name }}_key"}'
+    url: "{{rancher_master_url}}/v1/apikeys"
+    headers:
+      Accept: "application/json"
+      Content-Type: "application/json"
+  register: api_key
+  when: project_file.stat.exists == False
+
+- name: Wait for env to be ready on rancher side
+  pause: seconds=10
+  when: project_file.stat.exists == False
+
+- include: registry_credentials.yml
+  when: project_file.stat.exists == False  and item.username is defined
+  with_items: "{{docker_registries}}"
+
+
+- name: Generate project configuration
+  file:  path={{ inventory_dir }}/group_vars/{{ rancher_project_name }} state=directory
+  when: project_file.stat.exists == False
+  delegate_to: localhost
+
+- name: Generate project configuration
+  template:  src=rancher_project_key.j2 dest={{ inventory_dir }}/group_vars/{{ rancher_project_name }}/apikey.yml
+  when: project_file.stat.exists == False
+  delegate_to: localhost
+
+- debug: msg="Project apikey generated. You can now vault it with './ansible-vault_wrapper {{ inventory_dir }}/group_vars/{{ rancher_project_name }}/apikey.yml'"
+  when: project_file.stat.exists == False

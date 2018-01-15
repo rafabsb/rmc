@@ -1,0 +1,39 @@
+---
+- debug: msg="Installing stack {{ stack_name }}"
+
+- name: create stacks folder
+  file: path=stacks/{{stack_name}} state=directory mode=0700
+
+- name: copy docker-compose for {{ stack_name }} stack
+  template: src={{stack_name}}/docker-compose.yml dest=stacks/{{stack_name}}/docker-compose.yml
+
+- name: copy rancher-compose for {{ stack_name }} stack
+  template: src={{stack_name}}/rancher-compose.yml dest=stacks/{{stack_name}}/rancher-compose.yml
+
+- name: run rancher-compose upgrade on {{ stack_name }}
+  environment:
+    RANCHER_URL: "{{rancher_master_url}}"
+    RANCHER_ACCESS_KEY: "{{ rancher_api_key }}"
+    RANCHER_SECRET_KEY: "{{ rancher_api_secret }}"
+    RANCHER_ENVIRONMENT: "{{ rancher_project_name }}"
+  command: "rancher --debug up -s {{ stack_name | quote}} -d {{rancher_cli_stack_opts}}"
+  args:
+    chdir: "stacks/{{stack_name}}"
+  register: stack_upgrade
+  become: yes
+
+- debug: var=stack_upgrade
+
+- name: run rancher-compose confirm upgrade on {{ stack_name }}
+  environment:
+    RANCHER_URL: "{{rancher_master_url}}"
+    RANCHER_ACCESS_KEY: "{{ rancher_api_key }}"
+    RANCHER_SECRET_KEY: "{{ rancher_api_secret }}"
+    RANCHER_ENVIRONMENT: "{{ rancher_project_name }}"
+  command: "rancher --debug up -s {{stack_name | quote}} -d  --confirm-upgrade"
+  args:
+    chdir: "stacks/{{stack_name}}"
+  register: stack_confirm_upgrade
+  become: yes
+
+- debug: var=stack_confirm_upgrade
