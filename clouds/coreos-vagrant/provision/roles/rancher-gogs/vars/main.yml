@@ -1,0 +1,20 @@
+user_home: "{{ lookup('env','HOME') }}"
+defaultDomain: rancher.rafabsb.me
+
+stackName: gogs-git
+serviceDirBase: '{{ user_home }}/{{stackName}}'
+
+gogsImageTag: 0.11.34
+gogsUrl: git.{{defaultDomain}}
+
+gogsSshPort: 10022
+traefikServicePort: 3000
+
+# podem ser varias, separadas por virgula, exemplo: key1=value1,key2=value2
+# affinityHostLabels: dns_geral=true
+
+mysqlImageTag: 8.0
+MYSQL_DATABASE: gogs
+MYSQL_PASSWORD: 12345678
+MYSQL_ROOT_PASSWORD: 12345678
+MYSQL_USER: gogs

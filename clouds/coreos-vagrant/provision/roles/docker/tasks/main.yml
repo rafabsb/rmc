@@ -1,0 +1,33 @@
+---
+- name: install docker-py with pip
+  shell: |
+    PATH="/home/core/bin:$PATH"
+    pip install docker-py
+  tags: config
+  #environment: "{{proxy_env}}"
+
+- name: create docker setup dirs.
+  file: 
+    path: "{{ item }}"
+    state: directory
+    #owner: root 
+    #group: root
+    mode: 0755
+  with_items:
+    - '{{dockerConfDir}}'
+  become: true
+
+- name: Template daemon.json
+  template:
+    src: daemon.json.j2
+    dest: '{{ dockerConfDir }}/daemon.json'
+#    owner: root
+#    mode: 0644
+    force: yes
+  become: true
+  notify: 
+    - restart docker
+  tags: config
+
+
+

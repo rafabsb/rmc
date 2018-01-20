@@ -1,0 +1,2 @@
+- import_tasks: 10deploy-templates.yml
+- import_tasks: 20launch-stack.yml

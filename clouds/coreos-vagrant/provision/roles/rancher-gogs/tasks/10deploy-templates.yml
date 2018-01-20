@@ -1,0 +1,28 @@
+---
+- name: Create dir structure.
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: '{{user}}' 
+    group: '{{user}}'
+  with_items:
+    - '{{serviceDirBase}}'
+  become: true
+
+- name: Template docker-compose.yml.j2
+  template:
+    src: docker-compose.yml.j2
+    dest: '{{serviceDirBase}}/docker-compose.yml'
+    owner: '{{user}}' 
+    group: '{{user}}'
+    force: yes
+  become: true
+
+- name: Template rancher-compose.yml.j2
+  template:
+    src: rancher-compose.yml.j2
+    dest: '{{serviceDirBase}}/rancher-compose.yml'
+    owner: '{{user}}' 
+    group: '{{user}}'
+    force: yes
+  become: true

@@ -1,0 +1,6 @@
+---
+- hosts: rancher-agent
+
+  tasks:
+    - name: add rancher-agent
+      shell: "{{ lookup('env','ADD_AGENT_CMD') }}"
