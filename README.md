@@ -1,14 +1,15 @@
 # Rancher Multi-Cloud - IaaS
 ----------------
 
-### Infraestrutura de Processamento
+### Infraestrutura de Processamento.
 
 *   Pasta clouds => provisionamento da infra de processamento. Camada 0 - Zero.
 
-### Infraestrutura como Apps - IaaA
+### Infraestrutura da Cloud - Infra as Code.
 
-*   Pasta projects => projetos/apps deployados.
-    * **cloud-infra**: deploy dos apps que compõe a infra  
+*   **projects/cloud-infra** => deploy dos apps que compõe a infra
 
-### Apps
+### Infra dos Apps - Infra as Apps.
+
+*   **projects/apps-infra** => deploy da Infra dos Apps.
 
