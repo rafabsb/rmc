@@ -1,15 +1,17 @@
 # Rancher Multi-Cloud - IaaS
 ----------------
 
-### Infraestrutura de Processamento.
+### Infraestrutura de Processamento - Layer 0.
 
-*   **clouds/** => provisionamento da infra de processamento. Camada 0 - Zero.
+*   **clouds/** => provisionamento da infra de processamento.
 
-### Infraestrutura da Cloud - Infra as Code.
+### Infraestrutura da Cloud - Layer 1.
 
 *   **projects/cloud-infra** => deploy dos apps que compõe a infra
 
-### Infra dos Apps - Infra as Apps.
+### Templates de Componentes de Infraestrutura - Layer 2
+
+### Infra dos Apps - _Template de Templates_ - Layer 3.
 
 *   **projects/apps-infra** => deploy da Infra dos Apps.
 
