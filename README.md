@@ -3,7 +3,7 @@
 
 ### Infraestrutura de Processamento.
 
-*   Pasta clouds => provisionamento da infra de processamento. Camada 0 - Zero.
+*   **clouds/** => provisionamento da infra de processamento. Camada 0 - Zero.
 
 ### Infraestrutura da Cloud - Infra as Code.
 
