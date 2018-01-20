@@ -7,7 +7,7 @@
 
 ### => Infraestrutura da Cloud - Layer 1.
 
-*   **projects/cloud-infra** => deploy dos apps que compõe a infra
+*   **projects/00cloud-infra** => deploy dos apps que compõe a infra
 
 ### => Templates de Componentes de Infraestrutura - Layer 2
 
