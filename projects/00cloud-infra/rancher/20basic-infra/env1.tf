@@ -37,6 +37,7 @@ resource rancher_host "core-02" {
   hostname       = "core-02"
   labels {
     "traefik_lb"="true"
+    "dns"="true"
   }
 }
 
@@ -47,6 +48,8 @@ resource rancher_host "core-03" {
   hostname       = "core-03"
   labels {
     "traefik_lb"="true"
+    "dns"="true"
+
   }
 }
 
@@ -57,6 +60,7 @@ resource rancher_host "core-04" {
   hostname       = "core-04"
   labels {
     "traefik_lb"="true"
+    "dns"="true"
   }
 }
 
@@ -66,7 +70,7 @@ resource rancher_host "core-05" {
   environment_id = "${rancher_environment.env1.id}"
   hostname       = "core-05"
   labels {
-    "traefik_lb"="true"
+    "dns"="true"
     "data_node"="true"
   }
 }
