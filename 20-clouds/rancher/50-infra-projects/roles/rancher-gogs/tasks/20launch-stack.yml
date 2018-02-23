@@ -1,0 +1,4 @@
+---
+- name: launch stack via rancher-compose
+  shell: source /home/{{user}}/.bashrc && /usr/local/bin/rancher-compose -f {{serviceDirBase}}/docker-compose.yml -r {{serviceDirBase}}/rancher-compose.yml up -d --pull --upgrade --force-upgrade --batch-size "1" -c
+  become: true

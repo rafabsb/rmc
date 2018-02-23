@@ -1,0 +1,43 @@
+---
+- name: install docker-py with pip
+  shell: |
+    PATH="/home/core/bin:$PATH"
+    pip install docker-py
+  tags: config
+  #environment: "{{proxy_env}}"
+  become: true
+
+- name: install the docker rpm from a remote repo
+  yum:
+    name: https://download.docker.com/linux/centos/7/x86_64/stable/Packages/docker-ce-17.12.0.ce-1.el7.centos.x86_64.rpm
+    state: present
+  notify: 
+    - restart docker
+  become: true
+  tags: config
+
+- name: create docker setup dirs.
+  file: 
+    path: "{{ item }}"
+    state: directory
+    #owner: root 
+    #group: root
+    mode: 0755
+  with_items:
+    - '{{dockerConfDir}}'
+  become: true
+
+- name: Template daemon.json
+  template:
+    src: daemon.json.j2
+    dest: '{{ dockerConfDir }}/daemon.json'
+#    owner: root
+#    mode: 0644
+    force: yes
+  become: true
+  notify: 
+    - restart docker
+  tags: config
+
+
+

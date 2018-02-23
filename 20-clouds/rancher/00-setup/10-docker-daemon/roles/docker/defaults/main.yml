@@ -1,0 +1,7 @@
+dockerConfDir: /etc/docker
+dockerNetwork: '192.168.24.1/22'
+registryUrl: 'reg.rafabsb.me'
+registryPort: '5000'
+mirrorUrl: 'localmirror.rafabsb.me'
+mirrorPort: '5555'
+# dockerDaemonDataDir: /data/docker/daemon

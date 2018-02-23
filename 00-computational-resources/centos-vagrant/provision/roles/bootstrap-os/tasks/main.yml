@@ -1,0 +1,28 @@
+---
+- include: bootstrap-centos.yml
+  when: bootstrap_os == "centos"
+  become: true
+
+
+- include: setup-pipelining.yml
+  become: true
+
+- name: check if atomic host
+  stat:
+    path: /run/ostree-booted
+  register: ostree
+  become: true
+
+- set_fact:
+    is_atomic: "{{ ostree.stat.exists }}"
+
+- name: Gather nodes hostnames
+  setup:
+    gather_subset: '!all'
+    filter: ansible_*
+
+- name: Assign inventory name to unconfigured hostnames (non-CoreOS)
+  hostname:
+    name: "{{inventory_hostname}}"
+  when: ansible_os_family not in ['CoreOS', 'Container Linux by CoreOS']
+
